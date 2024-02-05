@@ -81,17 +81,83 @@ public class Board {
         for (int i = 0; i<board.length; i++){
             for(int j = 0; j<board[i].length; j++){
                 if (board[i][j] == 0);
-                return false
+                return false;
             }
         }
         return true;
     }
 
-    public static boolean winInRow (int[][] board, int row, int piece, int length){
+    public static boolean winInRow (int[][] board, int row, int piece, int length) {
+        int consecutiveCount = 0;
+        int columnCount = columnCount(board);
+        for (int i = 0; i < columnCount; i++) {
+            if (board[row][i] == piece){
+                consecutiveCount++;
+                if (consecutiveCount >= length) {
+                    return true;
+                }
+                    if (board[row-1][i] == piece){
+                        return true;
+                    }
+                    if (board[row+1][i] == piece){
+                        return true;
+                    }
+                    if (board[row-1][(i-length)+1]==piece){
+                        return true;
+                    }
+                    if (board[row+1][(i-length)+1]==piece){
+                        return true;
+                    }
 
+            }
+
+        }
+        return false;
     }
 
-    //Students should enter their functions above here
+    public static boolean winInColumn (int[][] board, int column, int piece, int length) {
+        int consecutiveCount = 0;
+        int rowCount = rowCount(board);
+        for (int i = 0; i < rowCount; i++) {
+            if (board[i][column] == piece) {
+                consecutiveCount++;
+                if (consecutiveCount >= length) {
+                    return true;
+                }
+                    if (board[i][column + 1] == piece) {
+                        return true;
+                    }
+                    if (board[i][column - 1] == piece) {
+                        return true;
+                    }
+                    if (board[(i-length) + 1][column + 1] == piece) {
+                        return true;
+                    }
+                    if (board[(i-length) + 1][column - 1] == piece) {
+                        return true;
+                    }
+            }
+        }
+        return false;
+    }
+
+
+    public static boolean winInDiagonalBackslash (int[][] board, int piece, int length){
+
+        return false;
+    }
+
+    public static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length){
+
+        return false;
+    }
+
+    public static int[] hint (int[][] board, int piece, int length){
+
+        return new int[0];
+    }
+
+        //Students should enter their functions above here
     /**
      * Is there a win in given board in any row of board
      *
