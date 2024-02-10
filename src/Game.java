@@ -29,7 +29,7 @@ import java.util.*;
  *
  * @author Jonathan Hudson
  * @email jwhudson@ucalgary.ca
- * @version 1.0
+ * @version 1.80
  */
 public class Game extends Canvas {
 

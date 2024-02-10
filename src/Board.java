@@ -1,7 +1,7 @@
 /**
  * CPSC 233 W24 Assignment 1 Starter to use to make Board.java
- * @author Jonathan Hudson
- * @email jwhudson@ucalgary.ca
+ * @author Dhruv Pujara
+ * @email dhruv.pujara1@ucalgary.ca
  * @version 1.0
  */
 public class Board {
@@ -90,25 +90,25 @@ public class Board {
     public static boolean winInRow (int[][] board, int row, int piece, int length) {
         int consecutiveCount = 0;
         int columnCount = columnCount(board);
+        int rowCount = rowCount(board);
         for (int i = 0; i < columnCount; i++) {
             if (board[row][i] == piece){
                 consecutiveCount++;
                 if (consecutiveCount >= length) {
-                    return true;
-                }
-                    if (board[row-1][i] == piece){
-                        return true;
-                    }
-                    if (board[row+1][i] == piece){
-                        return true;
-                    }
-                    if (board[row-1][(i-length)+1]==piece){
-                        return true;
-                    }
-                    if (board[row+1][(i-length)+1]==piece){
+
+                    if (row - 1 >= 0 && board[row - 1][i] == piece || row + 1 < rowCount && board[row + 1][i] == piece) {
                         return true;
                     }
 
+                    if (row - 1 >= 0 && i - length + 1 >= 0 && board[row - 1][(i - length) + 1] == piece) {
+                        return true;
+                    }
+                    if (row + 1 < rowCount && i - length + 1 >= 0 && board[row + 1][(i - length) + 1] == piece) {
+                        return true;
+                    }
+                }
+            } else {
+                consecutiveCount = 0;
             }
 
         }
@@ -118,43 +118,107 @@ public class Board {
     public static boolean winInColumn (int[][] board, int column, int piece, int length) {
         int consecutiveCount = 0;
         int rowCount = rowCount(board);
+        int columnCount = columnCount(board);
         for (int i = 0; i < rowCount; i++) {
             if (board[i][column] == piece) {
                 consecutiveCount++;
                 if (consecutiveCount >= length) {
-                    return true;
+
+                    if (column + 1 < columnCount && board[i][column + 1] == piece || column - 1 >= 0 && board[i][column - 1] == piece) {
+                        return true;
+                    }
+                    if (column - 1 >= 0 && i - length + 1 >= 0 && board[(i - length) + 1][column - 1] == piece) {
+                        return true;
+                    }
+                    if (column + 1 < columnCount && i - length + 1 >= 0 && board[(i - length) + 1][column + 1] == piece) {
+                        return true;
+                    }
                 }
-                    if (board[i][column + 1] == piece) {
-                        return true;
+            } else {
+                consecutiveCount = 0;
+            }
+
+        }
+        return false;
+    }
+
+
+    public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
+        int rowCount = rowCount(board);
+        int columnCount = columnCount(board);
+
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                int consecutiveCount = 0;
+                for (int k = 0; k < length; k++) {
+                    if (i + k < rowCount && j + k < columnCount && board[i + k][j + k] == piece) {
+                        consecutiveCount++;
+                        if (consecutiveCount >= length) {
+                            if ((i - 1 >= 0 && j + 1 < columnCount && board[i - 1][j + 1] == piece) ||
+                                    (i + 1 < rowCount && j - 1 >= 0 && board[i + 1][j - 1] == piece)) {
+                                return true;
+                            }
+                            if ((i - length >= 0 && j - length + 2 >= 0 && board[i - length][j - length + 2] == piece) ||
+                                    (i - length + 2 >= 0 && j - length >= 0 && board[i - length + 2][j - length] == piece)) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        consecutiveCount = 0;
                     }
-                    if (board[i][column - 1] == piece) {
-                        return true;
-                    }
-                    if (board[(i-length) + 1][column + 1] == piece) {
-                        return true;
-                    }
-                    if (board[(i-length) + 1][column - 1] == piece) {
-                        return true;
-                    }
+                }
             }
         }
         return false;
     }
 
 
-    public static boolean winInDiagonalBackslash (int[][] board, int piece, int length){
 
+
+    public static boolean winInDiagonalForwardSlash(int[][] board, int piece, int length) {
+        int rowCount = rowCount(board);
+        int columnCount = columnCount(board);
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                int consecutiveCount = 0;
+                for (int k = 0; k < length; k++) {
+                    if (i + k < rowCount && j - k >= 0 && board[i + k][j - k] == piece){
+                        consecutiveCount++;
+                        if (consecutiveCount >= length) {
+                            if ((i + 1 < rowCount && j + 1 < columnCount && (board[i + 1][j + 1] == piece) ||
+                                    (i - 1 >= 0 && j - 1 >= 0 && board[i - 1][j - 1] == piece))){
+                                return true;
+                            }
+                            if ((i - length >= 0 && j + length - 2 < columnCount && board[i - length][j + length - 2] == piece) ||
+                                    (i - length + 2 >= 0 && j + length < columnCount && board[i - length + 2][j + length] == piece)) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        consecutiveCount = 0;
+                    }
+                }
+            }
+        }
         return false;
     }
 
-    public static boolean winInDiagonalForwardSlash (int[][] board, int piece, int length){
-
-        return false;
-    }
 
     public static int[] hint (int[][] board, int piece, int length){
+        int columnCount = columnCount(board);
+        for (int j = 0; j < columnCount; j++){
+            if (canPlay(board, j)){
+                play(board, j, piece);
+                if (won(board, piece, length)){
+                    int row = removeLastPlay(board, j);
+                    return new int [] {row, j};
+                } else{
+                    removeLastPlay(board, j);
+                }
+            }
+        }
+        return new int[] {-1, -1};
 
-        return new int[0];
     }
 
         //Students should enter their functions above here
