@@ -537,11 +537,69 @@ public class BoardTest {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.BLU, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.BLU, Board.BLU, Board.BLU, Board.BLU, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.BLU, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.RED, Board.EMP, Board.BLU, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.RED, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.EMP, Board.EMP},
                 {Board.BLU, Board.RED, Board.RED, Board.RED, Board.BLU, Board.RED, Board.EMP, Board.EMP}
+
+        };
+        assertTrue(Board.winInDiagonalBackslash(board, Board.RED, 4));
+    }
+
+    @Test
+    public void winInBackSlash2(){
+        int [][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.RED, Board.EMP, Board.BLU},
+                {Board.EMP, Board.BLU, Board.RED, Board.BLU, Board.BLU},
+                {Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU},
+                {Board.EMP, Board.RED, Board.BLU, Board.BLU, Board.RED},
+                {Board.BLU, Board.RED, Board.RED, Board.RED, Board.BLU}
+
+        };
+        assertTrue(Board.winInDiagonalBackslash(board, Board.BLU, 3));
+    }
+
+    @Test
+    public void winInBackSlash3(){
+        int [][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.RED, Board.EMP, Board.BLU, Board.EMP, Board.EMP},
+                {Board.EMP, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.EMP},
+                {Board.EMP, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED},
+                {Board.BLU, Board.RED, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.EMP}
+
+        };
+        assertTrue(Board.winInDiagonalBackslash(board, Board.RED, 5));
+    }
+
+    @Test
+    public void winInBackSlash4(){
+        int [][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.BLU, Board.EMP, Board.EMP},
+                {Board.BLU, Board.RED, Board.RED, Board.EMP},
+                {Board.RED, Board.BLU, Board.RED, Board.BLU},
+                {Board.RED, Board.RED, Board.BLU, Board.RED},
+                {Board.BLU, Board.RED, Board.BLU, Board.BLU},
+                {Board.BLU, Board.RED, Board.RED, Board.RED}
+
+        };
+        assertTrue(Board.winInDiagonalBackslash(board, Board.BLU, 4));
+    }
+
+    @Test
+    public void winInBackSlash5(){
+        int [][] board = {
+                {Board.EMP, Board.RED, Board.RED, Board.EMP, Board.BLU, Board.EMP, Board.EMP},
+                {Board.EMP, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.RED, Board.EMP},
+                {Board.EMP, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED},
+                {Board.BLU, Board.RED, Board.RED, Board.RED, Board.BLU, Board.RED, Board.EMP}
 
         };
         assertTrue(Board.winInDiagonalBackslash(board, Board.RED, 4));

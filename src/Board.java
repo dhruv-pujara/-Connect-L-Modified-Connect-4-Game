@@ -20,6 +20,7 @@ public class Board {
     public static final int BLU = Game.BLU;
 
     //Students should enter their functions below here
+
     public static int[][] createBoard(int rows, int columns){
         int[][] board = new int [rows][columns];
         for(int i = 0; i < rows; i++){
