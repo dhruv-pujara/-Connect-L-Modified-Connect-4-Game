@@ -78,12 +78,14 @@ public class Board {
         return -1;
     }
 
-    public static boolean full (int[][] board){
-        for (int i = 0; i<board.length; i++){
-            for(int j = 0; j<board[i].length; j++){
-                if (board[i][j] == 0);
-                return false;
+    public static boolean full (int[][] board) {
+        for (int i = 0; i < rowCount(board); i++) {
+            for (int j = 0; j < columnCount(board); j++) {
+                if (board[i][j] == 0) {
+                    return false;
+                }
             }
+
         }
         return true;
     }
