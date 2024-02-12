@@ -22,12 +22,12 @@ public class Board {
     //Students should enter their functions below here
 
     /**
+     * Function to create a new board with specific dimensions
      *
      * @param rows The number of rows in the board
      * @param columns The number of columns in the board
      * @return A 2D integer arrray representing the initialized game board filled with empty spaces
      */
-    // Function to create a new board with specific dimensions
     public static int[][] createBoard(int rows, int columns){
         int[][] board = new int [rows][columns];
         for(int i = 0; i < rows; i++){
@@ -40,33 +40,34 @@ public class Board {
     }
 
     /**
+     * Function to get the number of rows in the board
      *
      * @param board The game Board
      * @return The number of rows in the board
      */
-    // Function to get the number of rows in the board
+
     public static int rowCount(int[][] board){
         return board.length;
     }
 
     /**
+     * Function to get the number of columns in the board
      *
      * @param board The game board
      * @return The number of columns in the board
      */
-    // Function to get the number of columns in the board
     public static int columnCount(int[][] board){
         return board[0].length;
     }
 
     /**
+     * Function to check if a given row and column indices are valid on the board
      *
      * @param board The game board
      * @param row The row index to check
      * @param column The column index to check
      * @return true if the indices are valid, otherwise false
      */
-    // Function to check if a given row and column indices are valid on the board
     public static boolean valid(int[][] board, int row, int column){
         int rowCount = rowCount(board);
         int columnCount = columnCount(board);
@@ -76,11 +77,12 @@ public class Board {
 
     /**
      *
+     * Function to check if a piece can be played in the given column
+     *
      * @param board The game board
      * @param column The column index to check
      * @return true if a piece can be played in the column, otherwise false
      */
-    // Function to check if a piece can be played in the given column
     public static boolean canPlay(int[][] board, int column){
         int rowCount = rowCount(board);
         for (int i = 0; i < rowCount; i++ ){
@@ -93,12 +95,14 @@ public class Board {
 
     /**
      *
+     *Function to play a piece in a specified column on the board
+     *
      * @param board The game board
      * @param column The column index where the piece is to be played
      * @param piece The value of the piece to be played (RED==1/BLU==2)
-     * @return
+     * @return the index of the row the piece stopped at when played, or return -1 if there was no
+     * room to play a new piece in provided colum
      */
-    //Function to play a piece in a specified column on the board
     public static int play (int[][] board, int column, int piece){
         int rowCount = rowCount(board);
         for (int row = rowCount - 1; row>= 0 ; row--){
@@ -111,12 +115,12 @@ public class Board {
     }
 
     /**
+     * Function to remove the last played piece from a specified column in the board
      *
      * @param board The game board
      * @param column The column index from which to remove the last played piece
      * @return The index of the row from which the piece was removed, or -1 if the column was empty
      */
-    // Function to remove the lst played piece from a specified column in the board
     public static int removeLastPlay (int[][] board, int column){
         int rowCount = rowCount(board);
         for (int row = 0; row < rowCount; row++){
@@ -131,11 +135,11 @@ public class Board {
 
 
     /**
+     * Function to check if the board is full
      *
      * @param board The game board
-     * @return true if the board if full, otherwise false
+     * @return true if the board is full, otherwise false
      */
-    // Function to check if the board is full
     public static boolean full (int[][] board) {
         int rowCount = rowCount(board);
         int columnCount = columnCount(board);
@@ -151,6 +155,7 @@ public class Board {
     }
 
     /**
+     * Function to check if there is a win in a row of specified length for a given piece
      *
      * @param board The game board
      * @param row The rorw index to check for a win
@@ -158,7 +163,6 @@ public class Board {
      * @param length The length of consecutive pieces required for a win
      * @return true is there is a win in the row, otherwise false
      */
-    // Function to check if there is a win in a row of specified length for a given piece
     public static boolean winInRow (int[][] board, int row, int piece, int length) {
         int consecutiveCount = 0;
         int columnCount = columnCount(board);
@@ -191,6 +195,7 @@ public class Board {
     }
 
     /**
+     * Function to check if there is a win in a column of specified length for a given piece
      *
      * @param board The game board
      * @param column The column index to check for a win
@@ -198,7 +203,6 @@ public class Board {
      * @param length The length of consecutive pieces required for a win
      * @return true is there is a win in the column, otherwise false
      */
-    // Function to check if there is a win in a column of specified length for a given piece
     public static boolean winInColumn (int[][] board, int column, int piece, int length) {
         int consecutiveCount = 0;
         int rowCount = rowCount(board);
@@ -232,33 +236,33 @@ public class Board {
 
 
     /**
+     * // Function to check if there is a win in a backslash diagonal of specified length for a given piece
      *
      * @param board The game board
      * @param piece The piece value to check for a win (RED==1/BLU==2)
      * @param length The length of consecutive pieces required for a win
      * @return true is there is a win in the diagonal backslash direction, otherwise false
      */
-    // Function to check if there is a win in a backslash diagonal of specified length for a given piece
     public static boolean winInDiagonalBackslash(int[][] board, int piece, int length) {
         int rowCount = rowCount(board);
         int columnCount = columnCount(board);
 
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                int consecutiveCount = 1;
+                int consecutiveCount = 0;
                 for (int k = 0; k < length; k++) {
                     if (i + k < rowCount && j + k < columnCount && board[i + k][j + k] == piece) {
                         consecutiveCount++;
                         // if the consecutive count is met or exceeds the requirement, check the winning conditions
                         if (consecutiveCount >= length) {
-                            // check if bottom left or bottom left perpendicular piece is the same as the winning player piece
+                            // check if top left or top left perpendicular piece is the same as the winning player piece
                             if ((i - 1 >= 0 && j + 1 < columnCount && board[i - 1][j + 1] == piece) ||
                                     (i + 1 < rowCount && j - 1 >= 0 && board[i + 1][j - 1] == piece)) {
                                 return true;
                             }
-                            // check if top left or top left perpendicular piece is the same as the winning player piece
-                            if ((i - length >= 0 && j - length + 2 >= 0 && board[i - length][j - length + 2] == piece) ||
-                                    (i - length + 2 >= 0 && j - length >= 0 && board[i - length + 2][j - length] == piece)) {
+                            // check if bottom left or bottom left perpendicular piece is the same as the winning player piece
+                            if ((i + length < rowCount && j + length - 2 >= 0 && board[i + length][j + length - 2] == piece) ||
+                                    (i + length - 2 >= 0 && j + length < columnCount && board[i + length - 2][j + length] == piece)) {
                                 return true;
                             }
                         }
@@ -274,32 +278,32 @@ public class Board {
 
 
     /**
+     * Function to check if there is a win in a forwardslash diagonal of specified length for a given piece
      *
      * @param board The game board
      * @param piece The piece value to check for a win (RED==1/BLU==2)
      * @param length The length of consecutive pieces required for a win
      * @return true is there is a win in the diagonal forwardslash direction, otherwise false
      */
-    // Function to check if there is a win in a forwardslash diagonal of specified length for a given piece
     public static boolean winInDiagonalForwardSlash(int[][] board, int piece, int length) {
         int rowCount = rowCount(board);
         int columnCount = columnCount(board);
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                int consecutiveCount = 1;
+                int consecutiveCount = 0;
                 for (int k = 0; k < length; k++) {
                     if (i + k < rowCount && j - k >= 0 && board[i + k][j - k] == piece){
                         consecutiveCount++;
                         // if the consecutive count is met or exceeds the requirement, check the winning conditions
                         if (consecutiveCount >= length) {
-                            // check if bottom left or bottom left perpendicular piece is the same as the winning player piece
+                            // check if top left or top right perpendicular piece is the same as the winning player piece
                             if ((i + 1 < rowCount && j + 1 < columnCount && (board[i + 1][j + 1] == piece) ||
                                     (i - 1 >= 0 && j - 1 >= 0 && board[i - 1][j - 1] == piece))){
                                 return true;
                             }
-                            // check if top left or top left perpendicular piece is the same as the winning player piece
-                            if ((i - length >= 0 && j + length - 2 < columnCount && board[i - length][j + length - 2] == piece) ||
-                                    (i - length + 2 >= 0 && j + length < columnCount && board[i - length + 2][j + length] == piece)) {
+                            // check if bottom left or bottom right perpendicular piece is the same as the winning player piece
+                            if ((i + length -2 >= 0 && j -length >= 0 && board[i + length - 2][j - length] == piece) ||
+                                    (i + length < rowCount && j - length  + 2 < columnCount && board[i + length][j - length + 2] == piece)) {
                                 return true;
                             }
                         }
@@ -315,13 +319,13 @@ public class Board {
 
 
     /**
+     * Function to provide a hint for the next move to make to win the game.
      *
      * @param board The game board
      * @param piece The piece value representing the player (RED==1/BLU==2)
      * @param length The length of consecutive pieces required for a win
      * @return An array containing the row and column indices of the winning move, or {-1, -1} if no winning move is found
      */
-    // Function to provide a hint for the next move to make to win the game.
     public static int[] hint (int[][] board, int piece, int length){
         int columnCount = columnCount(board);
         for (int j = 0; j < columnCount; j++){

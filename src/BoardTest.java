@@ -408,6 +408,25 @@ public class BoardTest {
         assertFalse(Board.valid(board,9,9));
     }
 
+
+
+    // Check if user can play when full board is empty
+    @Test
+    public void CanPlayEmptyBoard() {
+        int[][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
+        };
+        int columnCount = Board.columnCount(board);
+        for (int column = 0; column < columnCount; column++) {
+            assertTrue(Board.canPlay(board, column));
+        }
+    }
+
     // Check if user can play when column is empty
     @Test
     public void CanPlayEmptyColumn() {
@@ -420,7 +439,7 @@ public class BoardTest {
                 {Board.BLU, Board.RED, Board.EMP, Board.BLU, Board.RED, Board.EMP},
                 {Board.BLU, Board.RED, Board.EMP, Board.BLU, Board.RED, Board.EMP}
         };
-        int column = 5;
+        int column = 2;
         assertTrue(Board.canPlay(board, column));
     }
 
@@ -443,44 +462,29 @@ public class BoardTest {
     public void CanPlayPartiallyFilledColumn() {
         int[][] board = {
                 {Board.RED, Board.EMP, Board.EMP, Board.EMP},
-                {Board.RED, Board.EMP, Board.EMP, Board.RED},
+                {Board.RED, Board.EMP, Board.EMP, Board.EMP},
                 {Board.BLU, Board.EMP, Board.EMP, Board.BLU},
                 {Board.RED, Board.BLU, Board.EMP, Board.RED},
                 {Board.BLU, Board.BLU, Board.EMP, Board.BLU},
                 {Board.BLU, Board.BLU, Board.EMP, Board.BLU}
         };
-        int column = 1;
+        int column = 3;
         assertTrue(Board.canPlay(board, column));
     }
 
-    // Check if the user can play with an empty board
-    @Test
-    public void CanPlayEmptyBoard() {
-        int[][] board = {
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
-        };
-        int[] columns = {0, 1, 2, 3, 4, 5};
-        for (int column: columns) {
-            assertTrue(Board.canPlay(board, column));
-        }
-    }
 
-    // Check when baord is full expect from one column
+
+    // Check when board is full expect from one column
     @Test
-    public void CanPlayFullBoardExceptColumn1(){
+    public void CanPlayFullBoardExceptColumn2(){
         int [][] board = {
-                {Board.RED, Board.EMP, Board.BLU, Board.RED},
+                {Board.RED, Board.BLU, Board.EMP, Board.RED},
                 {Board.RED, Board.BLU, Board.BLU, Board.RED},
                 {Board.RED, Board.RED, Board.BLU, Board.RED},
                 {Board.RED, Board.BLU, Board.BLU, Board.RED},
                 {Board.RED, Board.BLU, Board.BLU, Board.RED}
         };
-        int column = 1;
+        int column = 2;
         assertTrue(Board.canPlay(board, column));
     }
 
@@ -516,6 +520,23 @@ public class BoardTest {
         assertEquals(-1, Board.play(board, column, piece));
     }
 
+
+
+    // To check piece played in a column that has only one empty row at the top
+    @Test
+    public void PlayFullColumnExceptRow0() {
+        int[][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.RED},
+                {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU},
+                {Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU}
+        };
+        int column = 2;
+        int piece = Board.RED;
+        assertEquals(0, Board.play(board, column, piece));
+        assertEquals(Board.RED, board[0][2]); //checks if piece was played at that row and column
+    }
+
     // Check to see piece played in a column has a few empty rows
     @Test
     public void PlayInHalfFilledColumn() {
@@ -531,20 +552,6 @@ public class BoardTest {
         assertEquals(Board.RED,board[1][column]); //checks if piece was played at that row and column
     }
 
-    // To check piece played in a column that has only one empty row at the top
-    @Test
-    public void PlayFullColumnExceptFirstRow() {
-        int[][] board = {
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.EMP},
-                {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU},
-                {Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU}
-        };
-        int column = 2;
-        int piece = Board.RED;
-        assertEquals(0, Board.play(board, column, piece));
-        assertEquals(Board.RED, board[0][2]); //checks if piece was played at that row and column
-    }
 
     // Check to piece played in a column when entire board is filled
     @Test
@@ -556,6 +563,7 @@ public class BoardTest {
                 {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.BLU},
                 {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.BLU},
                 {Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.BLU},
+                {Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU},
                 {Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.BLU}
         };
         int column = 1;
@@ -576,21 +584,6 @@ public class BoardTest {
         assertEquals(-1, Board.removeLastPlay(board, column));
     }
 
-    // Check when removing piece from a column with only one piece
-    @Test
-    public void RemoveLastPlaySinglePieceInColumn() {
-        int[][] board = {
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
-        };
-        int column = 0;
-        assertEquals(5, Board.removeLastPlay(board, column));
-        assertEquals(Board.EMP, board[5][0]); // Checking if piece was actually removed
-    }
 
     // Check when removing a piece from a full board
     @Test
@@ -607,21 +600,20 @@ public class BoardTest {
         assertEquals(Board.EMP, board[0][column]); // Checking if piece was actually removed
     }
 
-    // Test when removing a piece from the middle of a column
+    // Check when removing piece from a column with only one piece
     @Test
-    public void RemoveLastFromSemiFilledColumn() {
+    public void RemoveLastPlayOnePieceInColumn() {
         int[][] board = {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.BLU, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
         };
         int column = 0;
-        assertEquals(4, Board.removeLastPlay(board, column));
-        assertEquals(Board.EMP, board[4][0]); // Confirming that the piece is removed from the correct position
+        assertEquals(5, Board.removeLastPlay(board, column));
+        assertEquals(Board.EMP, board[5][0]); // Checking if piece was actually removed
     }
 
     // Check for removing a piece from an empty column
@@ -637,6 +629,25 @@ public class BoardTest {
         int column = 1;
         assertEquals(-1, Board.removeLastPlay(board, column));
     }
+
+    // Test when removing a piece from the middle of a column
+    @Test
+    public void RemoveLastFromSemiFilledColumn() {
+        int[][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.BLU, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
+        };
+        int column = 0;
+        assertEquals(4, Board.removeLastPlay(board, column));
+        assertEquals(Board.EMP, board[4][0]); // Checking if piece was actually removed
+    }
+
+
 
     // Check to see for a 5 x 5 filled board
     @Test
@@ -680,7 +691,7 @@ public class BoardTest {
     }
 
 
-    // Check to see output for a 8 x 8 board with all empty positions
+    // Check to see output for an 8 x 8 board with all empty positions
     @Test
     public void Full8x8EmptyBoard() {
         int[][] board = {
@@ -968,14 +979,14 @@ public class BoardTest {
 
     // Check output for forward slash win with length 3
     @Test
-    public void WinInDiagonalForwardSlash3() {
+    public void WinInDiagonalForwardSlashWinLength3() {
         int[][] board = {
                 {Board.RED, Board.EMP, Board.RED, Board.EMP},
-                {Board.EMP, Board.RED, Board.EMP, Board.RED},
-                {Board.RED, Board.EMP, Board.RED, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.RED},
-                {Board.EMP, Board.EMP, Board.EMP, Board.RED},
-                {Board.EMP, Board.EMP, Board.EMP, Board.RED}
+                {Board.EMP, Board.RED, Board.RED, Board.RED},
+                {Board.RED, Board.RED, Board.BLU, Board.BLU},
+                {Board.RED, Board.BLU, Board.BLU, Board.RED},
+                {Board.BLU, Board.BLU, Board.BLU, Board.RED},
+                {Board.RED, Board.RED, Board.BLU, Board.RED}
 
         };
         assertTrue(Board.winInDiagonalForwardSlash(board, Board.RED, 3));
@@ -1001,26 +1012,26 @@ public class BoardTest {
     @Test
     public void WinInDiagonalForwardSlashNoWin4() {
         int[][] board = {
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
-                {Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP},
-                {Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.EMP},
+                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP},
+                {Board.BLU, Board.BLU, Board.RED, Board.EMP, Board.EMP, Board.BLU, Board.EMP},
+                {Board.BLU, Board.BLU, Board.BLU, Board.RED, Board.EMP, Board.BLU, Board.EMP},
+                {Board.RED, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.RED, Board.EMP},
         };
         assertFalse(Board.winInDiagonalForwardSlash(board, Board.RED, 4));
     }
 
     // Check to see output for a forward slash with win length 4 at the centre of the board
     @Test
-    public void WinInDiagonalForwardSlashCentreWin() {
+    public void WinInDiagonalForwardSlashWinLength4() {
         int[][] board = {
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
-                {Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP},
-                {Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.RED, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.RED, Board.EMP, Board.RED, Board.EMP, Board.EMP},
-                {Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP},
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED}
+                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.BLU, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.RED, Board.BLU, Board.RED, Board.RED, Board.EMP, Board.RED, Board.EMP},
+                {Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED, Board.RED, Board.EMP},
+                {Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.EMP},
+                {Board.RED, Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.BLU, Board.EMP}
         };
         assertTrue(Board.winInDiagonalForwardSlash(board, Board.RED, 4));
     }
@@ -1033,7 +1044,7 @@ public class BoardTest {
         int[][] board = {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.BLU, Board.RED},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU, Board.BLU},
                 {Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU},
@@ -1042,34 +1053,19 @@ public class BoardTest {
         assertTrue(Board.winInDiagonalForwardSlash(board, Board.RED, 4));
     }
 
-    // Check Hint for win in diagonal forward slash
-    @Test
-    public void HintDiagonalFS() {
-        int[][] board = {
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU, Board.BLU},
-                {Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU},
-                {Board.EMP, Board.RED, Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.RED}
-        };
-        int[] expected = {5, Board.RED};
-        assertArrayEquals(Board.hint(board,Board.RED,5),expected);
-    }
 
 
     // Check output for full board
     @Test
-    public void testHintFullBoard() {
+    public void HintInAFullBoard() {
         int[][] board = {
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
+                {Board.BLU, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU},
+                {Board.RED, Board.RED, Board.RED, Board.RED, Board.BLU, Board.BLU, Board.RED},
+                {Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.RED},
+                {Board.BLU, Board.RED, Board.RED, Board.BLU, Board.BLU, Board.RED, Board.BLU},
+                {Board.BLU, Board.BLU, Board.BLU, Board.RED, Board.RED, Board.BLU, Board.BLU},
+                {Board.RED, Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.RED, Board.RED},
+                {Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED}
         };
         int piece = Board.RED;
         int length = 4;
@@ -1080,23 +1076,23 @@ public class BoardTest {
 
     // Check output for a win in the diagonal backslash
     @Test
-    public void HintWinDiagonalBackslash() {
+    public void HintForWinInRow() {
         int[][] board = {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.BLU, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
-                {Board.RED, Board.BLU, Board.RED, Board.EMP, Board.EMP, Board.BLU, Board.BLU},
-                {Board.BLU, Board.RED, Board.BLU, Board.RED, Board.RED, Board.BLU, Board.BLU},
-                {Board.EMP, Board.BLU, Board.BLU, Board.RED, Board.BLU, Board.RED, Board.BLU},
-                {Board.EMP, Board.RED, Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.RED}
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.RED, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
+                {Board.EMP, Board.RED, Board.RED, Board.EMP, Board.EMP, Board.BLU, Board.RED},
+                {Board.BLU, Board.RED, Board.BLU, Board.RED, Board.EMP, Board.BLU, Board.BLU},
+                {Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.BLU, Board.RED, Board.BLU},
+                {Board.BLU, Board.RED, Board.RED, Board.BLU, Board.RED, Board.BLU, Board.RED}
         };
-        int[] expected = {5, 1};
-        assertArrayEquals(Board.hint(board,Board.RED,4),expected);
+        int[] expected = {4, 4};
+        assertArrayEquals(Board.hint(board,Board.BLU,4),expected);
     }
 
     // Check output for empty board
     @Test
-    public void HintEmptyBoard() {
+    public void HintInAnEmptyBoard() {
         int[][] board = {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
@@ -1114,7 +1110,7 @@ public class BoardTest {
 
     // Check output for win in column
     @Test
-    public void testHinColumn() {
+    public void testForHinColumn() {
         int[][] board = {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
@@ -1124,8 +1120,24 @@ public class BoardTest {
                 {Board.EMP, Board.RED, Board.RED, Board.EMP, Board.EMP},
                 {Board.BLU, Board.RED, Board.BLU, Board.BLU, Board.BLU}
         };
-        int[] expected = {5, 5};
-        assertArrayEquals(Board.hint(board,Board.BLU,4),expected);
+        int[] expected = {5, 4};
+        assertArrayEquals(Board.hint(board,Board.BLU,3),expected);
+    }
+
+    // Check Hint for win in diagonal forward slash
+    @Test
+    public void HintDiagonalForwardSlash() {
+        int[][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU, Board.BLU},
+                {Board.EMP, Board.EMP, Board.EMP, Board.RED, Board.BLU, Board.RED, Board.BLU},
+                {Board.EMP, Board.RED, Board.RED, Board.BLU, Board.BLU, Board.BLU, Board.RED}
+        };
+        int[] expected = {5, 1};
+        assertArrayEquals(Board.hint(board,Board.RED,5),expected);
     }
 }
 
