@@ -1058,23 +1058,6 @@ public class BoardTest {
         assertArrayEquals(Board.hint(board,Board.RED,5),expected);
     }
 
-    // Check output for empty board
-    @Test
-    public void HintEmptyBoard() {
-        int[][] board = {
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
-                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
-        };
-        int piece = Board.RED;
-        int length = 5;
-        int[] expected = {-1, -1};
-        assertArrayEquals(expected, Board.hint(board, piece, length));
-    }
 
     // Check output for full board
     @Test
@@ -1111,9 +1094,27 @@ public class BoardTest {
         assertArrayEquals(Board.hint(board,Board.RED,4),expected);
     }
 
+    // Check output for empty board
+    @Test
+    public void HintEmptyBoard() {
+        int[][] board = {
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
+                {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP}
+        };
+        int piece = Board.RED;
+        int length = 5;
+        int[] expected = {-1, -1};
+        assertArrayEquals(expected, Board.hint(board, piece, length));
+    }
+
     // Check output for win in column
     @Test
-    public void testHintRow() {
+    public void testHinColumn() {
         int[][] board = {
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
                 {Board.EMP, Board.EMP, Board.EMP, Board.EMP, Board.EMP},
