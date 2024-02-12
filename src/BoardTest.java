@@ -8,8 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * CPSC 233 W24 Assignment 1 BoardTest Starter File
  * Holds a helper deep copy and example tests of deep copy
- * @author Jonathan Hudson
- * @email jwhudson@ucalgary.ca
+ * @author Dhruv Pujara
+ * @email dhruv.pujara1@ucalgary.ca
+ * Tutorial - 13
  * @version 1.0
  */
 public class BoardTest {

@@ -2,6 +2,7 @@
  * CPSC 233 W24 Assignment 1 Starter to use to make Board.java
  * @author Dhruv Pujara
  * @email dhruv.pujara1@ucalgary.ca
+ * Tutorial - 13
  * @version 1.0
  */
 public class Board {
